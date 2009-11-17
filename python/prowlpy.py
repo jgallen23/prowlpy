@@ -61,3 +61,22 @@ class Prowl(object):
             raise Exception("Invalid API Key %s" % verify_content)
         else:
             return True
+
+def main():
+    from optparse import OptionParser
+    usage = "usage: %prog -k [apikey] -a [app] -t [title] -m [message]"
+    parser = OptionParser(usage)
+    parser.add_option("-k", "--api", action = "store", type = "string", dest = "api")
+    parser.add_option("-a", "--app", action = "store", type = "string", dest = "app")
+    parser.add_option("-t", "--title", action = "store", type = "string", dest = "title")
+    parser.add_option("-m", "--message", action = "store", type = "string", dest = "message")
+
+    (options, args) = parser.parse_args()
+
+    if options.api:
+        p = Prowl(options.api)
+        p.add(options.app, options.title, options.message)
+    else:
+        parser.print_help()
+
+if __name__ == "__main__": main()
